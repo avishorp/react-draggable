@@ -106,6 +106,25 @@ export default class Draggable extends DraggableCore {
     zIndex: PropTypes.number,
 
     /**
+     * `resetOnStop` resets the drag induced movement when dragging ends.
+     *
+     * Example:
+     *
+     * ```jsx
+     *   let App = React.createClass({
+     *       render: function () {
+     *           return (
+     *               <Draggable resetOnStop={true}>
+     *                   <div>I have a zIndex</div>
+     *               </Draggable>
+     *           );
+     *       }
+     *   });
+     * ```
+     */
+    resetOnStop: PropTypes.bool,
+
+    /**
      * These properties should be defined on the child, not here.
      */
     className: dontSetMe,
@@ -117,7 +136,8 @@ export default class Draggable extends DraggableCore {
     axis: 'both',
     bounds: false,
     start: {x: 0, y: 0},
-    zIndex: NaN
+    zIndex: NaN,
+    resetOnStop: false
   });
 
   state = {
@@ -181,9 +201,15 @@ export default class Draggable extends DraggableCore {
 
     log('Draggable: onDragStop: %j', coreEvent.position);
 
-    this.setState({
+    let newState = {
       dragging: false
-    });
+    }
+
+    if (this.props.resetOnStop) {
+      newState.clientX = 0;
+      newState.clientY = 0;
+    }
+    this.setState(newState);
   };
 
   render() {

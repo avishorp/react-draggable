@@ -186,9 +186,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      (0, _utilsLog2['default'])('Draggable: onDragStop: %j', coreEvent.position);
 	
-	      _this.setState({
+	      var newState = {
 	        dragging: false
-	      });
+	      };
+	
+	      if (_this.props.resetOnStop) {
+	        newState.clientX = 0;
+	        newState.clientY = 0;
+	      }
+	      _this.setState(newState);
 	    };
 	  }
 	
@@ -339,6 +345,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      zIndex: _react.PropTypes.number,
 	
 	      /**
+	       * `resetOnStop` resets the drag induced movement when dragging ends.
+	       *
+	       * Example:
+	       *
+	       * ```jsx
+	       *   let App = React.createClass({
+	       *       render: function () {
+	       *           return (
+	       *               <Draggable resetOnStop={true}>
+	       *                   <div>I have a zIndex</div>
+	       *               </Draggable>
+	       *           );
+	       *       }
+	       *   });
+	       * ```
+	       */
+	      resetOnStop: _react.PropTypes.bool,
+	
+	      /**
 	       * These properties should be defined on the child, not here.
 	       */
 	      className: _utilsShims.dontSetMe,
@@ -352,7 +377,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      axis: 'both',
 	      bounds: false,
 	      start: { x: 0, y: 0 },
-	      zIndex: NaN
+	      zIndex: NaN,
+	      resetOnStop: false
 	    }),
 	    enumerable: true
 	  }]);
@@ -379,7 +405,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	  Copyright (c) 2015 Jed Watson.
 	  Licensed under the MIT License (MIT), see
 	  http://jedwatson.github.io/classnames
@@ -420,9 +446,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			module.exports = classNames;
 		} else if (true) {
 			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
 				return classNames;
-			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 		} else {
 			window.classNames = classNames;
 		}
